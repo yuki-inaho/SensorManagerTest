@@ -18,6 +18,7 @@ class RealsenseSensor{
         std::string name;
         SensorType type;
 
+        std::vector<RealsenseSensor> rs_sensor_list;
         rs2::pipeline pipeline;
         rs2::config cfg;
         rs2::device dev;

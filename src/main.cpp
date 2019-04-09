@@ -2,11 +2,12 @@
 #include "RealsenseSensorClass.h"
 #include "RealsenseSensorSetter.h"
 #include "SensorManager.h"
+#include "SensorWrapper.h"
 
 using namespace std;
 
 std::string PICO_ID="0007-0306-0107-0111";
-std::string REALSENSE_ID="#830612060670";
+std::string REALSENSE_ID="830612060670";
 
 int image_width = 1280;
 int image_height = 720;
@@ -16,23 +17,20 @@ int main (int argc, char *argv[])
 {
     RealsenseSensorSetter rs_setter;
     rs_setter.initialize();
-    cout << rs_setter.getNumSensor() << endl;
-    
-    std::vector<RealsenseSensor> rs_sensor;
+    std::vector<SensorWrapper> sensors;
+    rs_setter.setSensorObject(sensors);
 
-    rs_setter.setSensorObject(rs_sensor);
     SensorManager sens_mng;
     sens_mng.setIdxSerialMap(rs_setter.bm_idx2serial);
-    sens_mng.setSensors(rs_sensor);
-    std::string sn = "830612060670";
-    sens_mng.activateSensor(sn);    
+    sens_mng.setSensors(sensors);
+    sens_mng.activateSensor(REALSENSE_ID);    
     sens_mng.start();        
 
     cv::Mat color;
     while (true) {
         sens_mng.update();
         color = sens_mng.getRGBImage();
-
+        cout << color.rows << endl;
         cv::imshow("color", color);
         //waitkeyで終了
         if (cv::waitKey(20) == 27) {

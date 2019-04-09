@@ -1,19 +1,24 @@
 #pragma once
 #include "header.h"
-//#include "SensorClass.h"
+#include "SensorWrapper.h"
 #include "RealsenseSensorClass.h"
 #include "RealsenseSensorSetter.h"
+
+typedef std::function<void(cv::Mat&)> GetRGBImageFunc;
+typedef std::function<void(cv::Mat&)> GetDepthImageFunc;
+typedef std::function<void(CameraParameter&)> GetCameraParameterFunc;
+typedef std::function<void(void)> UpdateFunc;
+typedef std::function<void(void)> StartFunc;
+typedef std::function<void(void)> StopFunc;
 
 class RealsenseSensorSetter{
     public:
         void initialize(); 
-        void setSensorObject(std::vector<RealsenseSensor> &_sensor_vec);   
+        void setSensorObject(std::vector<SensorWrapper> &_sensor_vec);   
         int getNumSensor();
-        
         bimap_t bm_idx2serial;
-//        std::unordered_map<int, std::string> idx2serial;
-//        std::unordered_map<std::string, int> serial2idx;
         
     private:    
         int n_sensor;
+        std::vector<RealsenseSensor> rs_sensor_list;        
 };

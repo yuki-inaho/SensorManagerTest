@@ -1,8 +1,10 @@
 #pragma once
 
 #include "header.h"
+#include "SensorWrapper.h"
 #include "RealsenseSensorClass.h"
 
+#include<memory>
 
 typedef std::function<void(cv::Mat&)> GetRGBImageFunc;
 typedef std::function<void(cv::Mat&)> GetDepthImageFunc;
@@ -11,10 +13,11 @@ typedef std::function<void(void)> UpdateFunc;
 typedef std::function<void(void)> StartFunc;
 typedef std::function<void(void)> StopFunc;
 
+
 class SensorManager{
     public:
         void setIdxSerialMap(bimap_t _bm_idx2serial);
-        void setSensors(std::vector<RealsenseSensor> &_sensor_vec);
+        void setSensors(std::vector<SensorWrapper> &_sensor_vec);
         void activateSensor(std::string _serial_number);
         void start();
         void stop();
@@ -40,5 +43,5 @@ class SensorManager{
         StopFunc _stop_func;
         UpdateFunc _update_func;
 
-        std::vector<RealsenseSensor> sensor_vec;
+        std::vector<SensorWrapper> sensor_vec;
 };

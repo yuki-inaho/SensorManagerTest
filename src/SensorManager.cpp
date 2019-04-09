@@ -7,7 +7,7 @@ SensorManager::setIdxSerialMap(bimap_t _bm_idx2serial)
 }
 
 void
-SensorManager::setSensors(std::vector<RealsenseSensor> &_sensor_vec)
+SensorManager::setSensors(std::vector<SensorWrapper> &_sensor_vec)
 {
     sensor_vec = _sensor_vec ;
 }
@@ -16,26 +16,12 @@ void
 SensorManager::activateSensor(std::string _serial_number){
     int sensor_idx = bm_idx2serial.right.at(_serial_number);
     present_serial = _serial_number;
-
-    _get_rgb_image_func = [=](cv::Mat &_rgb_img){
-            _rgb_img = sensor_vec[sensor_idx].getRGBImage();
-            };
-    _get_depth_image_func = [=](cv::Mat &_depth_img){
-            _depth_img = sensor_vec[sensor_idx].getDepthImage();
-            };
-    _get_camera_parameter_func = [=](CameraParameter &_camera_param){
-            _camera_param = sensor_vec[sensor_idx].getCameraParameter();
-            };
-    _update_func = [=](){
-        sensor_vec[sensor_idx].update();
-    };
-    _start_func = [=](){
-        sensor_vec[sensor_idx].start();
-    };
-    _stop_func = [=](){
-        sensor_vec[sensor_idx].stop();
-    };
-
+    _get_rgb_image_func = sensor_vec[sensor_idx]._get_rgb_image_func;
+    _get_depth_image_func = sensor_vec[sensor_idx]._get_depth_image_func;
+    _get_camera_parameter_func  = sensor_vec[sensor_idx]._get_camera_parameter_func;
+    _update_func = sensor_vec[sensor_idx]._update_func;
+    _start_func = sensor_vec[sensor_idx]._start_func;
+    _stop_func = sensor_vec[sensor_idx]._stop_func;
 }
 
 cv::Mat 
@@ -71,7 +57,7 @@ SensorManager::start()
 void
 SensorManager::stop()
 {
-    _update_func();
+    _stop_func();
 }
 
 void

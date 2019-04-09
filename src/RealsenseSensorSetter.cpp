@@ -3,7 +3,6 @@
 
 using namespace std;
 
-
 void
 RealsenseSensorSetter::initialize(){
     rs2::context ctx;
@@ -32,22 +31,35 @@ RealsenseSensorSetter::initialize(){
         _cfg.enable_device(_dev.get_info(RS2_CAMERA_INFO_SERIAL_NUMBER));
 
         bm_idx2serial.insert(bimap_value_t(_sensor_count, sn));
-/*
-        idx2serial.insert(std::pair<int, std::string>(_sensor_count, sn));
-        serial2idx.insert(std::pair<std::string, int>(sn, _sensor_count));
-*/
         _pipeline.stop();
+
+        RealsenseSensor _sensor;
+        _sensor.initialize(sn);
+        rs_sensor_list.push_back(_sensor);        
+
         _sensor_count++;
     }
     n_sensor = _sensor_count;
 }
 
 void
-RealsenseSensorSetter::setSensorObject(std::vector<RealsenseSensor> &_sensor_vec){
+RealsenseSensorSetter::setSensorObject(std::vector<SensorWrapper> &_sensor_vec){
     for(int i=0;i<n_sensor;i++){
-        RealsenseSensor _sensor;
-        _sensor.initialize(bm_idx2serial.left.at(i));
-        _sensor_vec.push_back(_sensor);
+        SensorWrapper _sensor_wrapper;
+        
+        _sensor_wrapper._get_rgb_image_func = [=](cv::Mat &_rgb){
+            _rgb = rs_sensor_list[i].getRGBImage();
+        };
+        _sensor_wrapper._start_func = [=](){
+            rs_sensor_list[i].start();
+        };
+        _sensor_wrapper._stop_func = [=](){
+            rs_sensor_list[i].stop();
+        };
+        _sensor_wrapper._update_func = [=](){
+            rs_sensor_list[i].update();
+        };
+        _sensor_vec.emplace_back(_sensor_wrapper);
     }
 }
 
