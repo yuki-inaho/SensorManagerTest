@@ -1,6 +1,5 @@
 #pragma once
 #include "header.h"
-#include "SensorClass.h"
 
 class RealsenseSensor{
     public:

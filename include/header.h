@@ -23,5 +23,11 @@ struct CameraParameter{
     float base_line;
 };
 
+enum struct SensorType
+{
+  STEREO,
+  TOF
+};
+
 typedef boost::bimaps::bimap<int, std::string> bimap_t;
 typedef bimap_t::value_type bimap_value_t;

@@ -5,6 +5,7 @@
 
 using namespace std;
 
+std::string PICO_ID="0007-0306-0107-0111";
 std::string REALSENSE_ID="#830612060670";
 
 int image_width = 1280;
@@ -42,4 +43,3 @@ int main (int argc, char *argv[])
 
     return 0;
 }
-    /// read toml file

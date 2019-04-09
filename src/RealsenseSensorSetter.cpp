@@ -1,5 +1,4 @@
 #include "header.h"
-#include "SensorClass.h"
 #include "RealsenseSensorSetter.h"
 
 using namespace std;
