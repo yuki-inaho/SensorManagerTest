@@ -6,6 +6,9 @@
 #include <omp.h>
 #include <chrono>
 
+#include <boost/bimap/bimap.hpp>
+#include <functional>
+
 /// OpenCV
 #include <opencv2/opencv.hpp>
 /// RealSense
@@ -19,3 +22,6 @@ struct CameraParameter{
     float cy;
     float base_line;
 };
+
+typedef boost::bimaps::bimap<int, std::string> bimap_t;
+typedef bimap_t::value_type bimap_value_t;

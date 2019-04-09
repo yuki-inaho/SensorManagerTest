@@ -4,6 +4,7 @@
 
 using namespace std;
 
+
 void
 RealsenseSensorSetter::initialize(){
     rs2::context ctx;
@@ -31,8 +32,11 @@ RealsenseSensorSetter::initialize(){
         std::cout << "serial number = " << sn << std::endl;
         _cfg.enable_device(_dev.get_info(RS2_CAMERA_INFO_SERIAL_NUMBER));
 
+        bm_idx2serial.insert(bimap_value_t(_sensor_count, sn));
+/*
         idx2serial.insert(std::pair<int, std::string>(_sensor_count, sn));
         serial2idx.insert(std::pair<std::string, int>(sn, _sensor_count));
+*/
         _pipeline.stop();
         _sensor_count++;
     }
@@ -43,7 +47,7 @@ void
 RealsenseSensorSetter::setSensorObject(std::vector<RealsenseSensor> &_sensor_vec){
     for(int i=0;i<n_sensor;i++){
         RealsenseSensor _sensor;
-        _sensor.initialize(idx2serial.at(i));
+        _sensor.initialize(bm_idx2serial.left.at(i));
         _sensor_vec.push_back(_sensor);
     }
 }

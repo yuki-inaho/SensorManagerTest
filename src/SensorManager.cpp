@@ -1,10 +1,9 @@
 #include "SensorManager.h"
 
 void
-SensorManager::setIdxSerialMap(std::unordered_map<int, std::string> &_idx2serial, std::unordered_map<std::string, int> &_serial2idx)
+SensorManager::setIdxSerialMap(bimap_t _bm_idx2serial)
 {
-    idx2serial = _idx2serial;
-    serial2idx = _serial2idx;    
+    bm_idx2serial = _bm_idx2serial;
 }
 
 void
@@ -15,7 +14,7 @@ SensorManager::setSensors(std::vector<RealsenseSensor> &_sensor_vec)
 
 void 
 SensorManager::activateSensor(std::string _serial_number){
-    int sensor_idx = serial2idx.at(_serial_number);
+    int sensor_idx = bm_idx2serial.right.at(_serial_number);
     present_serial = _serial_number;
 
     _get_rgb_image_func = [=](cv::Mat &_rgb_img){

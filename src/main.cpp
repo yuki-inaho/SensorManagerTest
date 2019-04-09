@@ -21,7 +21,7 @@ int main (int argc, char *argv[])
 
     rs_setter.setSensorObject(rs_sensor);
     SensorManager sens_mng;
-    sens_mng.setIdxSerialMap(rs_setter.idx2serial, rs_setter.serial2idx);
+    sens_mng.setIdxSerialMap(rs_setter.bm_idx2serial);
     sens_mng.setSensors(rs_sensor);
     std::string sn = "830612060670";
     sens_mng.activateSensor(sn);    

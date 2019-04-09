@@ -2,7 +2,7 @@
 
 #include "header.h"
 #include "RealsenseSensorClass.h"
-#include <functional>
+
 
 typedef std::function<void(cv::Mat&)> GetRGBImageFunc;
 typedef std::function<void(cv::Mat&)> GetDepthImageFunc;
@@ -13,7 +13,7 @@ typedef std::function<void(void)> StopFunc;
 
 class SensorManager{
     public:
-        void setIdxSerialMap(std::unordered_map<int, std::string> &_idx2serial, std::unordered_map<std::string,int> &_serial2idx);
+        void setIdxSerialMap(bimap_t _bm_idx2serial);
         void setSensors(std::vector<RealsenseSensor> &_sensor_vec);
         void activateSensor(std::string _serial_number);
         void start();
@@ -27,8 +27,11 @@ class SensorManager{
         std::string present_serial;
 
         int n_sensor;
+        bimap_t bm_idx2serial;
+        /*
         std::unordered_map<int, std::string> idx2serial;
         std::unordered_map<std::string, int> serial2idx;
+        */
 
         GetRGBImageFunc _get_rgb_image_func;
         GetDepthImageFunc _get_depth_image_func;
