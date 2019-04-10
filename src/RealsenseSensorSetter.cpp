@@ -44,6 +44,7 @@ RealsenseSensorSetter::initialize(){
 
 void
 RealsenseSensorSetter::setSensorObject(std::vector<SensorWrapper> &_sensor_vec){
+
     for(int i=0;i<n_sensor;i++){
         SensorWrapper _sensor_wrapper;
         
@@ -62,6 +63,7 @@ RealsenseSensorSetter::setSensorObject(std::vector<SensorWrapper> &_sensor_vec){
         _sensor_vec.emplace_back(_sensor_wrapper);
     }
 }
+
 
 int
 RealsenseSensorSetter::getNumSensor(){

@@ -2,7 +2,6 @@
 #include "header.h"
 #include "SensorWrapper.h"
 #include "RealsenseSensorClass.h"
-#include "RealsenseSensorSetter.h"
 
 typedef std::function<void(cv::Mat&)> GetRGBImageFunc;
 typedef std::function<void(cv::Mat&)> GetDepthImageFunc;
